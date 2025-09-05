@@ -1,3 +1,66 @@
-[gd_scene format=3 uid="uid://ce2ff6les4kpv"]
+[gd_scene load_steps=10 format=3 uid="uid://ce2ff6les4kpv"]
+
+[ext_resource type="Texture2D" uid="uid://durfcvnuisvry" path="res://icon.svg" id="1_y7yf3"]
+
+[sub_resource type="GDScript" id="GDScript_40wwj"]
+script/source = "extends CharacterBody2D
+
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+
+func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if Input.is_key_pressed(KEY_SPACE) and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	var direction := int(Input.is_key_pressed(KEY_D)) - int(Input.is_key_pressed(KEY_A))
+	if direction:
+		velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	move_and_slide()
+"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y7yf3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_40wwj"]
+
+[sub_resource type="Sky" id="Sky_y7yf3"]
+sky_material = SubResource("ProceduralSkyMaterial_40wwj")
+
+[sub_resource type="Environment" id="Environment_adb1b"]
+background_mode = 2
+sky = SubResource("Sky_y7yf3")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_vcvoh"]
+
+[sub_resource type="Compositor" id="Compositor_f8tiu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y7yf3"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = SubResource("GDScript_40wwj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CapsuleShape2D_y7yf3")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_y7yf3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_adb1b")
+camera_attributes = SubResource("CameraAttributesPractical_vcvoh")
+compositor = SubResource("Compositor_f8tiu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, 92)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_y7yf3")
