@@ -15,7 +15,8 @@ sky = SubResource("Sky_y2yqg")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p1i0w"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_p1i0w"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_p1i0w"]
+size = Vector3(10, 0.1, 10)
 
 [sub_resource type="QuadMesh" id="QuadMesh_p1i0w"]
 size = Vector2(10, 10)
@@ -63,11 +64,12 @@ compositor = SubResource("Compositor_fji6l")
 physics_material_override = SubResource("PhysicsMaterial_p1i0w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_p1i0w")
+shape = SubResource("BoxShape3D_p1i0w")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("QuadMesh_p1i0w")
+skeleton = NodePath("../..")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 script = SubResource("GDScript_p1i0w")
