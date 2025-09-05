@@ -1,3 +1,21 @@
-[gd_scene format=3 uid="uid://c8kasijwrlmn"]
+[gd_scene load_steps=6 format=3 uid="uid://c8kasijwrlmn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p1i0w"]
+
+[sub_resource type="Sky" id="Sky_y2yqg"]
+sky_material = SubResource("ProceduralSkyMaterial_p1i0w")
+
+[sub_resource type="Environment" id="Environment_p1i0w"]
+background_mode = 2
+sky = SubResource("Sky_y2yqg")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_y2yqg"]
+
+[sub_resource type="Compositor" id="Compositor_fji6l"]
 
 [node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p1i0w")
+camera_attributes = SubResource("CameraAttributesPractical_y2yqg")
+compositor = SubResource("Compositor_fji6l")
